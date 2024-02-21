@@ -9,6 +9,7 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "cours", path = "listcours")
 public interface CoursRepository extends JpaRepository<Cours, Integer> {
+    Cours findById(int id);
     List<Cours> findByNomCours(@Param("nomCours") String nomCours);
     List<Cours> findByInstructeur(@Param("instructeur") String instructeur);
     List<Cours> findByLieu(@Param("lieu") String lieu);

@@ -9,5 +9,6 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "utilisateur", path = "utilisateurs")
 public interface UtilisateurRepository extends JpaRepository <Utilisateur,Integer> {
+    Utilisateur findById(int id);
     List<Utilisateur> findByNom(@Param("nom") String nom);
 }

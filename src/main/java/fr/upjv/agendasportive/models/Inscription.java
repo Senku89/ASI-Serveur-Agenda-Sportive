@@ -9,14 +9,35 @@ public class Inscription {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
     @ManyToOne
-    @JoinColumn(name = "cours_id")
     private Cours cours;
 
-    // Ptetre ajouter date inscription
+    // Ptetre ajouter date inscription (optionnel)
 
-    // Getters et Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Cours getCours() {
+        return cours;
+    }
+
+    public void setCours(Cours cours) {
+        this.cours = cours;
+    }
 }

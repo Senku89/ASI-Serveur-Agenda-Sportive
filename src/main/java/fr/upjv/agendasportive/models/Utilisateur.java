@@ -16,7 +16,6 @@ public class Utilisateur {
     private String mdp;
     @Column(nullable = false)
     private int age;
-
     @OneToMany(mappedBy = "utilisateur")
     private List<Inscription> inscriptions;
 

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "inscription", path = "inscriptions")
 public interface InscriptionRepository extends JpaRepository<Inscription, Integer> {
+    Inscription findById(int id);
     List<Inscription> findByUtilisateur(Utilisateur utilisateur);
     List<Inscription> findByCours(Cours cours);
 
