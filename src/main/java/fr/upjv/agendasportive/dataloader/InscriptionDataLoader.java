@@ -37,11 +37,11 @@ public class InscriptionDataLoader implements CommandLineRunner {
         Cours cours3 = coursRepository.findById(3);
 
         // Ajouter des inscriptions
-        addInscriptions(utilisateur1, cours1);
-        addInscriptions(utilisateur2, cours1);
-        addInscriptions(utilisateur3, cours2);
-        addInscriptions(utilisateur1, cours3);
-        addInscriptions(utilisateur2, cours3);
+        addInscriptions(utilisateur1, cours1); //id 1
+        addInscriptions(utilisateur2, cours1); //id 2
+        addInscriptions(utilisateur3, cours2); //id 3
+        addInscriptions(utilisateur1, cours3); //id 4
+        addInscriptions(utilisateur2, cours3); //id 5
     }
 
     private void addInscriptions(Utilisateur utilisateur, Cours cours) {

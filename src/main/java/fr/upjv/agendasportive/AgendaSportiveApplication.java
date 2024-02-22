@@ -23,7 +23,7 @@ public class AgendaSportiveApplication {
     }
 
     /*
-    @Bean
+    @Bean // A java object that is instantiated, assembled, and managed by the Spring IoC container (IoC = Inversion of Control)
     public CommandLineRunner demo(UtilisateurRepository utilisateurRepository, CoursRepository coursRepository, InscriptionRepository inscriptionRepository) {
         return args -> {
             // Ajouter des utilisateurs

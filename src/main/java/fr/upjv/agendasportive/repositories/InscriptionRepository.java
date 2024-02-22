@@ -15,3 +15,6 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Intege
     List<Inscription> findByCours(Cours cours);
 
 }
+
+
+// Client -> utilisateur, cours -> Serveur -> (methode inscription pour ajouter -> tester si il est pas deja inscrit)
