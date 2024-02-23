@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/p")
 public class LoginController {
     // Field Injection is not recommended so I didn't use Autowired
     //@Autowired // Inject dependency into beans
     //private UtilisateurRepository utilisateurRepository;
+
     private final UtilisateurRepository utilisateurRepository;
 
     public LoginController(UtilisateurRepository utilisateurRepository) {
@@ -24,12 +27,14 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        Utilisateur user = (Utilisateur) utilisateurRepository.findByNom(loginRequest.getUsername());
-        if (user != null && user.getMdp().equals(loginRequest.getPassword())) {
-            return ResponseEntity.ok().body(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        List<Utilisateur> userList = utilisateurRepository.findByNom(loginRequest.getUsername());
+        if (!userList.isEmpty()) {
+            Utilisateur user = userList.getFirst();
+            if (user.getMdp().equals(loginRequest.getPassword())) {
+                return ResponseEntity.ok().body(user);
+            }
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur ou Mot de Passe Invalide");
     }
 }
 
