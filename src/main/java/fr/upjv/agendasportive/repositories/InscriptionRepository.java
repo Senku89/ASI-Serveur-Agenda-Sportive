@@ -13,7 +13,7 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Intege
     Inscription findById(int id);
     List<Inscription> findByUtilisateur(Utilisateur utilisateur);
     List<Inscription> findByCours(Cours cours);
-
+    List<Inscription> findByUtilisateurAndCours(Utilisateur utilisateur, Cours cours);
 }
 
 

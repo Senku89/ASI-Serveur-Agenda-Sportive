@@ -1,5 +1,6 @@
 package fr.upjv.agendasportive.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,15 +8,13 @@ public class Inscription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
+    @JsonIgnoreProperties("inscriptions")
     @ManyToOne
     private Utilisateur utilisateur;
-
     @ManyToOne
     private Cours cours;
 
     // Ptetre ajouter date inscription (optionnel)
-
 
     public int getId() {
         return id;

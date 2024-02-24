@@ -7,9 +7,11 @@ import fr.upjv.agendasportive.repositories.CoursRepository;
 import fr.upjv.agendasportive.repositories.InscriptionRepository;
 import fr.upjv.agendasportive.repositories.UtilisateurRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(2)
 public class InscriptionDataLoader implements CommandLineRunner {
 
     private final UtilisateurRepository utilisateurRepository;
@@ -27,7 +29,7 @@ public class InscriptionDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // Obtenez des utilisateurs et des cours
+        // Obtenir les utilisateurs et les cours
         Utilisateur utilisateur1 = utilisateurRepository.findById(1);
         Utilisateur utilisateur2 = utilisateurRepository.findById(2);
         Utilisateur utilisateur3 = utilisateurRepository.findById(3);
@@ -42,13 +44,19 @@ public class InscriptionDataLoader implements CommandLineRunner {
         addInscriptions(utilisateur3, cours2); //id 3
         addInscriptions(utilisateur1, cours3); //id 4
         addInscriptions(utilisateur2, cours3); //id 5
+
     }
 
+    // Ajouter une inscription
     private void addInscriptions(Utilisateur utilisateur, Cours cours) {
         Inscription inscription = new Inscription();
         inscription.setUtilisateur(utilisateur);
         inscription.setCours(cours);
         inscriptionRepository.save(inscription);
+
+        // Ajouter l'inscription à la liste des inscriptions de l'utilisateur
+        utilisateur.getInscriptions().add(inscription);
+        utilisateurRepository.save(utilisateur); // Mettre à jour l'utilisateur avec la nouvelle inscription
     }
 }
 

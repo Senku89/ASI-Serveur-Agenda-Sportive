@@ -3,6 +3,7 @@ package fr.upjv.agendasportive.controller;
 import fr.upjv.agendasportive.models.LoginRequest;
 import fr.upjv.agendasportive.models.Utilisateur;
 import fr.upjv.agendasportive.repositories.UtilisateurRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,60 +11,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/p")
+@RequestMapping("/api")
 public class LoginController {
+
     // Field Injection is not recommended so I didn't use Autowired
     //@Autowired // Inject dependency into beans
     //private UtilisateurRepository utilisateurRepository;
 
     private final UtilisateurRepository utilisateurRepository;
 
+    @Autowired
     public LoginController(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> loginUtilisateur(@RequestBody LoginRequest loginRequest) {
         List<Utilisateur> userList = utilisateurRepository.findByNom(loginRequest.getUsername());
         if (!userList.isEmpty()) {
             Utilisateur user = userList.getFirst();
             if (user.getMdp().equals(loginRequest.getPassword())) {
-                return ResponseEntity.ok().body(user);
+                Map<String, Object> responseBody = new HashMap<>();
+                responseBody.put("id", user.getId());
+                responseBody.put("nom", user.getNom());
+                return ResponseEntity.ok().body(responseBody); // OK (200) avec l'utilisateur en cas de succès
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur ou Mot de Passe Invalide");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur ou Mot de Passe Invalide"); // NON (401) en cas d'échec
     }
 }
 
-/*
-public void loginUser(String username, String password) {
-    OkHttpClient client = new OkHttpClient();
+/* HTTP URL CONNECTION
+try {
+    URL url = new URL("YOUR_BACKEND_URL/api/login");
+    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    urlConnection.setRequestMethod("POST");
+    urlConnection.setRequestProperty("Content-Type", "application/json");
+    urlConnection.setDoOutput(true);
 
-    MediaType mediaType = MediaType.parse("application/json");
-    RequestBody body = RequestBody.create(mediaType, "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}");
-    Request request = new Request.Builder()
-            .url("YOUR_BACKEND_URL/api/login")
-            .post(body)
-            .addHeader("Content-Type", "application/json")
-            .build();
+    String jsonInputString = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
+    try(OutputStream os = urlConnection.getOutputStream()) {
+        byte[] input = jsonInputString.getBytes("utf-8");
+        os.write(input, 0, input.length);
+    }
 
-    client.newCall(request).enqueue(new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
-            e.printStackTrace();
+    try(BufferedReader br = new BufferedReader(
+            new InputStreamReader(urlConnection.getInputStream(), "utf-8"))) {
+        StringBuilder response = new StringBuilder();
+        String responseLine = null;
+        while ((responseLine = br.readLine()) != null) {
+            response.append(responseLine.trim());
         }
-
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            if (response.isSuccessful()) {
-                // Login successful, handle response
-            } else {
-                // Login failed, handle error response
-            }
-        }
-    });
+        // Process the response here
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    if (urlConnection != null) {
+        urlConnection.disconnect();
+    }
 }
  */

@@ -14,4 +14,6 @@ public interface CoursRepository extends JpaRepository<Cours, Integer> {
     List<Cours> findByInstructeur(@Param("instructeur") String instructeur);
     List<Cours> findByLieu(@Param("lieu") String lieu);
 
+    //List<Cours> findCoursNonInscrits(Utilisateur utilisateur);
+
 }

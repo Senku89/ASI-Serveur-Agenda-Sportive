@@ -1,11 +1,13 @@
 package fr.upjv.agendasportive.dataloader;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import fr.upjv.agendasportive.models.Utilisateur;
 import fr.upjv.agendasportive.repositories.UtilisateurRepository;
 import org.springframework.boot.CommandLineRunner;
 
 @Component
+@Order(1)
 public class UtilisateurDataLoader implements CommandLineRunner {
     private final UtilisateurRepository utilisateurRepository;
 

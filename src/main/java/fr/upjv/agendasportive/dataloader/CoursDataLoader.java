@@ -3,12 +3,14 @@ package fr.upjv.agendasportive.dataloader;
 import fr.upjv.agendasportive.models.Cours;
 import fr.upjv.agendasportive.repositories.CoursRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
+@Order(1)
 public class CoursDataLoader implements CommandLineRunner {
 
     private final CoursRepository coursRepository;

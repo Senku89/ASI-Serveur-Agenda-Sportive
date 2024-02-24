@@ -3,6 +3,7 @@ package fr.upjv.agendasportive.models;
 import fr.upjv.agendasportive.models.Inscription;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,8 +17,12 @@ public class Utilisateur {
     private String mdp;
     @Column(nullable = false)
     private int age;
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Inscription> inscriptions;
+
+    // Définir la relation entre Utilisateur et Inscription.
+    // FetchType.EAGER spécifie que les Inscriptions
+    // liées à un Utilisateur doivent être chargées immédiatement lors de la récupération de l'Utilisateur depuis la base de données.
+    @OneToMany(mappedBy = "utilisateur", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Inscription> inscriptions = new ArrayList<>();
 
     public Utilisateur(){}
 
