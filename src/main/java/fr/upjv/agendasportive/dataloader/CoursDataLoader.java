@@ -7,7 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Component
 @Order(1)
@@ -23,13 +23,10 @@ public class CoursDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // Définir format Date
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
         // Définir Dates spécifiques
-        Date dateCours1 = sdf.parse("21/02/2024 10:00:00");
-        Date dateCours2 = sdf.parse("22/02/2024 15:30:00");
-        Date dateCours3 = sdf.parse("23/02/2024 18:00:00");
+        LocalDate dateCours1 = LocalDate.parse("2024-02-21");
+        LocalDate dateCours2 = LocalDate.parse("2024-02-22");
+        LocalDate dateCours3 = LocalDate.parse("2024-02-23");
 
         // Ajouter des cours
         Cours cours1 = new Cours("Yoga", dateCours1, "Salle A", "Session de yoga", "Senator Armstrong");

@@ -15,6 +15,8 @@ public class Inscription {
     private Cours cours;
 
     // Ptetre ajouter date inscription (optionnel)
+    // @Column(nullable = false)
+    // private LocalDate dateInscription;
 
     public int getId() {
         return id;

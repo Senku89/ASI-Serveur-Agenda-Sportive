@@ -1,7 +1,9 @@
 package fr.upjv.agendasportive.controller;
 
 import fr.upjv.agendasportive.models.Cours;
+import fr.upjv.agendasportive.models.Utilisateur;
 import fr.upjv.agendasportive.repositories.CoursRepository;
+import fr.upjv.agendasportive.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,12 @@ import java.util.List;
 public class CoursController {
 
     private final CoursRepository coursRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    @Autowired // Injection des dependances de maniere transparente dans le constructeur
-    public CoursController(CoursRepository coursRepository) {
+    @Autowired // Injection des dépendances de manière transparente dans le constructeur
+    public CoursController(CoursRepository coursRepository, UtilisateurRepository utilisateurRepository) {
         this.coursRepository = coursRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     /**
@@ -102,3 +106,25 @@ public class CoursController {
     }
     */
 }
+
+/* NE MARCHE PAS
+@GetMapping("/search/semaine/{startDate}/{userId}")
+public ResponseEntity<List<Cours>> getCoursByWeek(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                  @PathVariable int userId) {
+    LocalDate endDate = startDate.plusDays(6);
+
+    Utilisateur utilisateur = utilisateurRepository.findById(userId);
+
+    if (utilisateur == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    List<Cours> coursOfWeek = coursRepository.findByHoraireBetweenAndUtilisateur(startDate, endDate, utilisateur);
+
+    if (coursOfWeek.isEmpty()) {
+        return ResponseEntity.noContent().build();
+    }
+
+    return ResponseEntity.ok().body(coursOfWeek);
+}
+ */

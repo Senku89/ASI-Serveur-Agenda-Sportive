@@ -2,7 +2,7 @@ package fr.upjv.agendasportive.models;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Cours {
@@ -12,7 +12,7 @@ public class Cours {
     @Column(nullable = false)
     private String nomCours;
     @Column(nullable = false)
-    private Date horaire;
+    private LocalDate horaire;
     @Column(nullable = false)
     private String lieu;
     @Column(nullable = false)
@@ -23,7 +23,7 @@ public class Cours {
     public Cours() {
     }
 
-    public Cours(String nc, Date h, String li, String desc, String inst) {
+    public Cours(String nc, LocalDate h, String li, String desc, String inst) {
         nomCours = nc;
         horaire = h;
         lieu = li;
@@ -47,11 +47,11 @@ public class Cours {
         this.nomCours = nomCours;
     }
 
-    public Date getHoraire() {
+    public LocalDate getHoraire() {
         return horaire;
     }
 
-    public void setHoraire(Date horaire) {
+    public void setHoraire(LocalDate horaire) {
         this.horaire = horaire;
     }
 
