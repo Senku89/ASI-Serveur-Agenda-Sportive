@@ -70,19 +70,27 @@ public class UtilisateurController {
      * Obtient la liste des cours auxquels un utilisateur est inscrit
      *
      * @param userId L'identifiant unique de l'utilisateur
-     * @return ResponseEntity<List<Inscription>> Liste des inscriptions de l'utilisateur
+     * @return ResponseEntity<List<Cours>> Liste des inscriptions de l'utilisateur
      *         Si l'utilisateur n'est pas trouvé, retourne un Response avec le code d'état 404 (Non trouvé)
      *         Si l'utilisateur est trouvé, retourne un Response avec le code d'état 200 (OK) et la liste
      *         des inscriptions dans le body
      */
     @GetMapping("/inscrits/{userId}")
-    public ResponseEntity<List<Inscription>> getCoursByUtilisateur(@PathVariable int userId) {
+    public ResponseEntity<List<Cours>> getCoursByUtilisateur(@PathVariable int userId) {
         Utilisateur utilisateur = utilisateurRepository.findById(userId);
         if (utilisateur == null) {
             return ResponseEntity.notFound().build(); // Utilisateur non trouvé
         }
 
-        return ResponseEntity.ok().body(utilisateur.getInscriptions());
+        List<Inscription> inscriptions = utilisateur.getInscriptions();
+        List<Cours> coursList = new ArrayList<>();
+
+        // Récupérer uniquement les informations sur les cours
+        for (Inscription inscription : inscriptions) {
+            coursList.add(inscription.getCours());
+        }
+
+        return ResponseEntity.ok().body(coursList);
     }
 
     /** PAS EFFICIENT
