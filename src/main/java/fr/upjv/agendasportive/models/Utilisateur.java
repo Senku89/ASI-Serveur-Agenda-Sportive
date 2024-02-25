@@ -67,7 +67,6 @@ public class Utilisateur {
     public List<Inscription> getInscriptions() {
         return inscriptions;
     }
-
     public void setInscriptions(List<Inscription> inscriptions) {
         this.inscriptions = inscriptions;
     }

@@ -2,7 +2,9 @@ package fr.upjv.agendasportive.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Cours {
@@ -20,14 +22,15 @@ public class Cours {
     @Column(nullable = false)
     private String instructeur;
 
-    public Cours(){}
+    public Cours() {
+    }
 
     public Cours(String nc, Date h, String li, String desc, String inst) {
-        nomCours=nc;
-        horaire=h;
-        lieu=li;
-        description=desc;
-        instructeur=inst;
+        nomCours = nc;
+        horaire = h;
+        lieu = li;
+        description = desc;
+        instructeur = inst;
     }
 
     public int getId() {

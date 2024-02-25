@@ -30,6 +30,16 @@ public class LoginController {
         this.utilisateurRepository = utilisateurRepository;
     }
 
+    /**
+     * Authentification d'un utilisateur
+     *
+     * @param loginRequest Les informations de connexion de l'utilisateur (nom d'utilisateur et mot de passe)
+     * @return ResponseEntity<?> Un ResponseEntity contenant les résultats de l'authentification
+     *         Si l'authentification réussit, retourne un Response avec le code 200 (OK) et
+     *         les détails de l'utilisateur dans le body
+     *         Si l'authentification échoue en raison d'un nom d'utilisateur ou d'un mot de passe incorrect,
+     *         retourne un Response avec le code 401 (Non autorisé) et un message d'erreur dans le body
+     */
     @PostMapping("/login")
     public ResponseEntity<?> loginUtilisateur(@RequestBody LoginRequest loginRequest) {
         List<Utilisateur> userList = utilisateurRepository.findByNom(loginRequest.getUsername());
@@ -43,11 +53,12 @@ public class LoginController {
                 return ResponseEntity.ok().body(responseBody); // OK (200) avec l'utilisateur en cas de succès
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur ou Mot de Passe Invalide"); // NON (401) en cas d'échec
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur ou Mot de Passe Invalide");
+        // UNAUTHORIZED (401) en cas d'échec
     }
 }
 
-/* HTTP URL CONNECTION
+/* HTTP URL CONNECTION A SUPPRIMMER
 try {
     URL url = new URL("YOUR_BACKEND_URL/api/login");
     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

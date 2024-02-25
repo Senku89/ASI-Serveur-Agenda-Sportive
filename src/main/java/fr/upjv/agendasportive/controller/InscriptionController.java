@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/inscriptions")
 public class InscriptionController {
 
     private final InscriptionRepository inscriptionRepository;
@@ -30,7 +30,42 @@ public class InscriptionController {
         this.coursRepository = coursRepository;
     }
 
-    @PostMapping("/ajouter-inscription")
+    /**
+     * Obtenir une inscription par son ID
+     *
+     * @param inscriptionId L'ID de l'inscription à rechercher
+     * @return ResponseEntity<?> Le résultat de l'opération de recherche de l'inscription
+     *         Si l'inscription est trouvée, retourne un Response avec le code 200 (OK)
+     *         et l'inscription dans le body
+     *         Si l'inscription spécifiée n'existe pas, retourne un ResponseEntity avec le code 404 (Non trouvé)
+     *         et un message d'erreur dans le body
+     */
+    @GetMapping("/search/{inscriptionId}")
+    public ResponseEntity<?> getInscriptionById(@PathVariable int inscriptionId) {
+        // Recherche de l'inscription par son ID
+        Optional<Inscription> optionalInscription = Optional.ofNullable(inscriptionRepository.findById(inscriptionId));
+        if (optionalInscription.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inscription non trouvée");
+        }
+
+        // Renvoyer l'inscription trouvée dans la réponse
+        return ResponseEntity.ok(optionalInscription.get());
+    }
+
+    /**
+     * Ajouter une inscription à un cours pour un utilisateur
+     *
+     * @param inscriptionRequest Les détails de l'inscription à ajouter (ID de l'utilisateur et ID du cours)
+     * @return ResponseEntity<?> Le résultat de l'opération d'ajout d'inscription
+     *         Si l'inscription est ajoutée avec succès, retourne un ResponseEntity avec le code 200 (OK) et
+     *         un message de confirmation dans le body
+     *         -
+     *         Si l'utilisateur ou le cours spécifié n'existe pas, retourne un Response avec
+     *         le code 400 (Mauvaise requête) et un message d'erreur dans le body
+     *         Si l'utilisateur est déjà inscrit au cours spécifié, retourne un ResponseEntity avec
+     *         le code 400 (Mauvaise requête) et un message d'erreur dans le body
+     */
+    @PostMapping("/ajouter")
     public ResponseEntity<?> ajouterInscription(@RequestBody InscriptionRequest inscriptionRequest) {
 
         // Trouver l'utilisateur et le cours (gerer si findById retourne null)
@@ -57,7 +92,7 @@ public class InscriptionController {
         inscription.setCours(cours);
         inscriptionRepository.save(inscription);
 
-        // Ajouter l'inscription à la liste des inscriptions de l'utilisateur
+        // Ajouter le cours à la liste des inscriptions de l'utilisateur
         utilisateur.getInscriptions().add(inscription);
         utilisateurRepository.save(utilisateur); // Mettre à jour
 
@@ -65,7 +100,17 @@ public class InscriptionController {
         return ResponseEntity.ok().body("Inscription realise par l'utilisateur");
     }
 
-    @DeleteMapping("/supprimer-inscription/{inscriptionId}")
+    /**
+     * Pour supprimer une inscription spécifiée par son ID
+     *
+     * @param inscriptionId L'ID de l'inscription à supprimer
+     * @return ResponseEntity<?> Le résultat de l'opération de suppression de l'inscription
+     *         Si l'inscription est supprimée avec succès, retourne un Response avec le code 200 (OK)
+     *         et un message de confirmation dans le body
+     *         Si l'inscription spécifiée n'existe pas, retourne un Response avec le code 404 (Non trouvé)
+     *         et un message d'erreur dans le body
+     */
+    @DeleteMapping("/supprimer/{inscriptionId}")
     public ResponseEntity<?> supprimerInscription(@PathVariable int inscriptionId) {
 
         // Vérifier si l'inscription existe

@@ -1,18 +1,9 @@
 package fr.upjv.agendasportive;
 
-import fr.upjv.agendasportive.models.Cours;
 import fr.upjv.agendasportive.models.Inscription;
-import fr.upjv.agendasportive.models.Utilisateur;
-import fr.upjv.agendasportive.repositories.CoursRepository;
-import fr.upjv.agendasportive.repositories.InscriptionRepository;
-import fr.upjv.agendasportive.repositories.UtilisateurRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Date;
 
 @SpringBootApplication
 @EntityScan({"fr.upjv.applicationsportive", "fr.upjv.agendasportive.models"})
