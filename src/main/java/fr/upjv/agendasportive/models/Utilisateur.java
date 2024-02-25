@@ -1,6 +1,5 @@
 package fr.upjv.agendasportive.models;
 
-import fr.upjv.agendasportive.models.Inscription;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

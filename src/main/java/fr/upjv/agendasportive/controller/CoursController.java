@@ -1,7 +1,6 @@
 package fr.upjv.agendasportive.controller;
 
 import fr.upjv.agendasportive.models.Cours;
-import fr.upjv.agendasportive.models.Inscription;
 import fr.upjv.agendasportive.repositories.CoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
