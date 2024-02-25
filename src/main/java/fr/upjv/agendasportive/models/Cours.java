@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Cours {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int idCours;
     @Column(nullable = false)
     private String nomCours;
     @Column(nullable = false)
@@ -31,12 +31,12 @@ public class Cours {
         instructeur = inst;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCours() {
+        return idCours;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCours(int id) {
+        this.idCours = id;
     }
 
     public String getNomCours() {

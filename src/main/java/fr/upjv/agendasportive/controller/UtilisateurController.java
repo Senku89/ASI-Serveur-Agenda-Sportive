@@ -70,7 +70,7 @@ public class UtilisateurController {
      * Obtient la liste des cours auxquels un utilisateur est inscrit
      *
      * @param userId L'identifiant unique de l'utilisateur
-     * @return ResponseEntity<List<Cours>> Liste des inscriptions de l'utilisateur
+     * @return ResponseEntity<List<Cours>> Liste des cours inscrits de l'utilisateur
      *         Si l'utilisateur n'est pas trouvé, retourne un Response avec le code d'état 404 (Non trouvé)
      *         Si l'utilisateur est trouvé, retourne un Response avec le code d'état 200 (OK) et la liste
      *         des inscriptions dans le body

@@ -101,6 +101,48 @@ public class InscriptionController {
     }
 
     /**
+     * Supprime une inscription spécifiée par l'ID de l'utilisateur et l'ID du cours
+     *
+     * @param idUser L'ID de l'utilisateur dont l'inscription doit être supprimée
+     * @param idCours L'ID du cours dont l'inscription doit être supprimée
+     * @return ResponseEntity<?> Le résultat de l'opération de suppression de l'inscription :
+     *         - Si l'inscription est supprimée avec succès, retourne un Response 200 (OK)
+     *           et un message de confirmation dans le corps
+     *         - Si l'inscription spécifiée n'existe pas, retourne un Response 404 (Non trouvé)
+     *           et un message d'erreur dans le corps
+     */
+    @DeleteMapping("/supprimer/{idUser}/{idCours}")
+    public ResponseEntity<?> supprimerInscription(@PathVariable int idUser, @PathVariable int idCours) {
+        // Rechercher l'utilisateur par son ID
+        Optional<Utilisateur> utilisateurOptional = Optional.ofNullable(utilisateurRepository.findById(idUser));
+        Optional<Cours> coursOptional = Optional.ofNullable(coursRepository.findById(idCours));
+        if (utilisateurOptional.isEmpty() || coursOptional.isEmpty()) {
+            // Si l'utilisateur n'existe pas, retourner une réponse 404
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur ou Cours non trouvé");
+        }
+
+        // Rechercher l'inscription spécifiée par l'utilisateur et le cours
+        Utilisateur utilisateur = utilisateurOptional.get();
+        Cours cours = coursOptional.get();
+        List<Inscription> inscriptions = inscriptionRepository.findByUtilisateurAndCours(utilisateur, cours);
+        if (inscriptions.isEmpty()) {
+            // Si l'inscription n'existe pas, retourner une réponse 404
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Inscription non trouvée");
+        }
+
+        // Supprimer l'inscription de la liste des inscriptions de l'utilisateur
+        Inscription inscription = inscriptions.getFirst(); // Un seul Inscription d'un Cours par Utilisateur
+        utilisateur.getInscriptions().remove(inscription);
+        utilisateurRepository.save(utilisateur);
+
+        // Supprimer l'inscription
+        inscriptionRepository.delete(inscription);
+
+        // Retourner une réponse 200 avec un message de confirmation
+        return ResponseEntity.ok().body("Inscription supprimée avec succès");
+    }
+
+    /**
      * Pour supprimer une inscription spécifiée par son ID
      *
      * @param inscriptionId L'ID de l'inscription à supprimer

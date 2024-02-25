@@ -9,7 +9,7 @@ import java.util.List;
 public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int idUser;
     @Column(nullable = false)
     private String nom;
     @Column(nullable = false)
@@ -31,12 +31,12 @@ public class Utilisateur {
         this.age=ag;
     }
 
-    public int getId() {
-        return id;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUser(int id) {
+        this.idUser = id;
     }
 
     public String getNom() {
