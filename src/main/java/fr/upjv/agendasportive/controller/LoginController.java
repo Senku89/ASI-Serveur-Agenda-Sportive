@@ -48,7 +48,7 @@ public class LoginController {
             if (user.getMdp().equals(loginRequest.getPassword())) {
                 Map<String, Object> responseBody = new HashMap<>();
                 responseBody.put("success", true); // Ajouter le champ "success"
-                responseBody.put("id", user.getIdUser());
+                responseBody.put("id", user.getId());
                 responseBody.put("nom", user.getNom());
                 return ResponseEntity.ok().body(responseBody); // OK (200) avec l'utilisateur en cas de succès
             }
