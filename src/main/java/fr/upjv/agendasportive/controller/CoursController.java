@@ -92,26 +92,4 @@ public class CoursController {
         // Retourner les cours filtrés dans la réponse
         return ResponseEntity.ok().body(coursOfWeek);
     }
-
-    /* NE MARCHE PAS
-    @GetMapping("/search/semaine/{startDate}/{userId}")
-    public ResponseEntity<List<Cours>> getCoursByWeek(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                      @PathVariable int userId) {
-        LocalDate endDate = startDate.plusDays(6);
-
-        Utilisateur utilisateur = utilisateurRepository.findById(userId);
-
-        if (utilisateur == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<Cours> coursOfWeek = coursRepository.findByHoraireBetweenAndUtilisateur(startDate, endDate, utilisateur);
-
-        if (coursOfWeek.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok().body(coursOfWeek);
-    }
-    */
 }
