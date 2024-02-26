@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,9 +124,9 @@ public class UtilisateurController {
         // Filtrer les cours en fonction de la semaine définie et des cours auxquels l'utilisateur est inscrit
         List<Cours> coursOfWeek = new ArrayList<>();
         for (Inscription inscription : utilisateur.getInscriptions()) {
-            LocalDate coursDate = inscription.getCours().getHoraire(); // No need for conversion
+            LocalDateTime coursDate = inscription.getCours().getHoraire(); // No need for conversion
 
-            if (coursDate.isAfter(startDate.minusDays(1)) && coursDate.isBefore(endDate.plusDays(1))) {
+            if (coursDate.isAfter(startDate.minusDays(1).atStartOfDay()) && coursDate.isBefore(endDate.plusDays(1).atStartOfDay())) {
                 coursOfWeek.add(inscription.getCours());
             }
         }

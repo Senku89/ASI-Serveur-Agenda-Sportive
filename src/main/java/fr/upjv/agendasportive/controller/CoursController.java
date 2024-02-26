@@ -93,38 +93,25 @@ public class CoursController {
         return ResponseEntity.ok().body(coursOfWeek);
     }
 
-    /* A SUPPRIMER
-    // Renvoie les cours non inscrits d'un utilisateur
-    @GetMapping("/utilisateur/non-inscrits/{userId}")
-    public ResponseEntity<List<Cours>> getCoursNonInscrits(@PathVariable int userId) {
+    /* NE MARCHE PAS
+    @GetMapping("/search/semaine/{startDate}/{userId}")
+    public ResponseEntity<List<Cours>> getCoursByWeek(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                      @PathVariable int userId) {
+        LocalDate endDate = startDate.plusDays(6);
+
         Utilisateur utilisateur = utilisateurRepository.findById(userId);
+
         if (utilisateur == null) {
-            return ResponseEntity.badRequest().body(null); // Utilisateur non trouvé
+            return ResponseEntity.notFound().build();
         }
-        List<Cours> cours = coursRepository.findCoursNonInscrits(utilisateur.getId());
-        return ResponseEntity.ok().body(cours);
+
+        List<Cours> coursOfWeek = coursRepository.findByHoraireBetweenAndUtilisateur(startDate, endDate, utilisateur);
+
+        if (coursOfWeek.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(coursOfWeek);
     }
     */
 }
-
-/* NE MARCHE PAS
-@GetMapping("/search/semaine/{startDate}/{userId}")
-public ResponseEntity<List<Cours>> getCoursByWeek(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                  @PathVariable int userId) {
-    LocalDate endDate = startDate.plusDays(6);
-
-    Utilisateur utilisateur = utilisateurRepository.findById(userId);
-
-    if (utilisateur == null) {
-        return ResponseEntity.notFound().build();
-    }
-
-    List<Cours> coursOfWeek = coursRepository.findByHoraireBetweenAndUtilisateur(startDate, endDate, utilisateur);
-
-    if (coursOfWeek.isEmpty()) {
-        return ResponseEntity.noContent().build();
-    }
-
-    return ResponseEntity.ok().body(coursOfWeek);
-}
- */

@@ -60,31 +60,3 @@ public class InscriptionDataLoader implements CommandLineRunner {
     }
 }
 
-/*
-        // Ajouter des inscriptions
-        Inscription inscription1 = new Inscription();
-        inscription1.setUtilisateur(utilisateur1);
-        inscription1.setCours(cours1);
-        inscriptionRepository.save(inscription1);
-
-        Inscription inscription2 = new Inscription();
-        inscription2.setUtilisateur(utilisateur2);
-        inscription2.setCours(cours1);
-        inscriptionRepository.save(inscription2);
-
-        Inscription inscription3 = new Inscription();
-        inscription3.setUtilisateur(utilisateur3);
-        inscription3.setCours(cours2);
-        inscriptionRepository.save(inscription3);
-
-        Inscription inscription4 = new Inscription();
-        inscription4.setUtilisateur(utilisateur1);
-        inscription4.setCours(cours3);
-        inscriptionRepository.save(inscription4);
-
-        Inscription inscription5 = new Inscription();
-        inscription5.setUtilisateur(utilisateur2);
-        inscription5.setCours(cours3);
-        inscriptionRepository.save(inscription5);
- */
-

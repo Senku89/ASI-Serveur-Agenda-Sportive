@@ -11,10 +11,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "inscription", path = "inscriptions")
 public interface InscriptionRepository extends JpaRepository<Inscription, Integer> {
     Inscription findById(int id);
+    List<Inscription> findByUtilisateurAndCours(Utilisateur utilisateur, Cours cours);
     List<Inscription> findByUtilisateur(Utilisateur utilisateur);
     List<Inscription> findByCours(Cours cours);
-    List<Inscription> findByUtilisateurAndCours(Utilisateur utilisateur, Cours cours);
 }
-
-
-// Client -> utilisateur, cours -> Serveur -> (methode inscription pour ajouter -> tester si il est pas deja inscrit)

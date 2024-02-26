@@ -57,35 +57,3 @@ public class LoginController {
         // UNAUTHORIZED (401) en cas d'échec
     }
 }
-
-/* HTTP URL CONNECTION A SUPPRIMMER
-try {
-    URL url = new URL("YOUR_BACKEND_URL/api/login");
-    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-    urlConnection.setRequestMethod("POST");
-    urlConnection.setRequestProperty("Content-Type", "application/json");
-    urlConnection.setDoOutput(true);
-
-    String jsonInputString = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
-    try(OutputStream os = urlConnection.getOutputStream()) {
-        byte[] input = jsonInputString.getBytes("utf-8");
-        os.write(input, 0, input.length);
-    }
-
-    try(BufferedReader br = new BufferedReader(
-            new InputStreamReader(urlConnection.getInputStream(), "utf-8"))) {
-        StringBuilder response = new StringBuilder();
-        String responseLine = null;
-        while ((responseLine = br.readLine()) != null) {
-            response.append(responseLine.trim());
-        }
-        // Process the response here
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-} finally {
-    if (urlConnection != null) {
-        urlConnection.disconnect();
-    }
-}
- */
